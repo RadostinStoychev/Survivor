@@ -81,3 +81,6 @@ MonoBehaviour:
   - Id: 1
     Amount: 1
     Chance: 0.1
+  - Id: 2
+    Amount: 1
+    Chance: 0.5
