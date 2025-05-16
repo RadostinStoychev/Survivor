@@ -1,5 +1,7 @@
 using Code.Gameplay.Cameras.Services;
+using Code.Gameplay.Characters.Heroes.Behaviours;
 using Code.Gameplay.Characters.Heroes.Services;
+using Code.Gameplay.Lifetime.Behaviours;
 using Code.Infrastructure.Instantiation;
 using Code.Infrastructure.UIManagement;
 using Code.UI;
@@ -19,6 +21,7 @@ namespace Code.Infrastructure.Installers
 		private IInstantiateService _instantiateService;
 		private IUIRootProvider _uiRootProvider;
 		private IUiService _uiService;
+		private Hero _activeHero;
 
 		[Inject]
 		private void Construct(
@@ -44,7 +47,12 @@ namespace Code.Infrastructure.Installers
 			_instantiateService.SetInstantiator(_instantiator);
 			_uiRootProvider.SetUiRoot(_uiRoot);
 			
-			_heroFactory.CreateHero(Vector3.zero, Quaternion.identity);
+			//TODO: Extract UI reactionary code to a UI related manager.
+			_activeHero = _heroFactory.CreateHero(Vector3.zero, Quaternion.identity);
+			_activeHero.GetComponent<Experience>().OnLevelUp += () =>
+			{
+				_uiService.OpenWindow<LevelUpWindow>();
+			};
 
 			_uiService.OpenWindow<HudWindow>();
 		}
