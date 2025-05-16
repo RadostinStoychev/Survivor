@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee07dcd0a8d4274a19eb0e85523be8a, type: 3}
   m_Name: EnemyWalkerConfig
   m_EditorClassIdentifier: 
-  Id: 1
+  Id: 0
   Prefab: {fileID: 2198279886409412981, guid: c4fb28ad43a1f4bc991a52accf7459ba, type: 3}
   Health: 30
   MovementSpeed: 1.5

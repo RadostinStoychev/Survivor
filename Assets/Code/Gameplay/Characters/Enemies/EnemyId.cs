@@ -4,5 +4,6 @@ namespace Code.Gameplay.Characters.Enemies
 	{
 		Walker = 0,
 		Skeleton = 1,
+		Boss = 2,
 	}
 }
