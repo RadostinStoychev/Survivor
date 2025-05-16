@@ -2,7 +2,7 @@ namespace Code.Gameplay.Characters.Enemies
 {
 	public enum EnemyId
 	{
-		Unknown = 0,
-		Walker = 1
+		Walker = 0,
+		Skeleton = 1,
 	}
 }

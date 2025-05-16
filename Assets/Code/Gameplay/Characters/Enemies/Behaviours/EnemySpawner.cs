@@ -1,3 +1,4 @@
+using System;
 using Code.Common.Extensions;
 using Code.Gameplay.Cameras.Services;
 using Code.Gameplay.Characters.Enemies.Services;
@@ -47,11 +48,19 @@ namespace Code.Gameplay.Characters.Enemies.Behaviours
 			if (_timer >= SpawnInterval)
 			{
 				Vector2 randomSpawnPosition = RandomSpawnPosition(hero.transform.position);
-				_enemyFactory.CreateEnemy(EnemyId.Walker, at: randomSpawnPosition, Quaternion.identity);
+				_enemyFactory.CreateEnemy(GetEnemyToSpawn(), at: randomSpawnPosition, Quaternion.identity);
 				_timer = 0;
 			}
 		}
 
+		// Returns random enemy ID for spawning.
+		private EnemyId GetEnemyToSpawn()
+		{
+			EnemyId[] allEnemyIds = (EnemyId[])Enum.GetValues(typeof(EnemyId));
+			int randomIndex = Random.Range(0, allEnemyIds.Length);
+			return allEnemyIds[randomIndex];
+		}
+		
 		private Vector2 RandomSpawnPosition(Vector2 heroWorldPosition)
 		{
 			bool startWithHorizontal = Random.Range(0, 2) == 0;
