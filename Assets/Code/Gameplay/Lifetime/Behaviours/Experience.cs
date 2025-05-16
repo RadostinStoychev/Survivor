@@ -24,6 +24,8 @@ namespace Code.Gameplay.Lifetime.Behaviours
                 CurrentExperience += experienceAmount;
             }
             
+            //TODO: Is this action even needed? 
+            
             OnExperienceChanged?.Invoke(experienceAmount);
         }
     }
