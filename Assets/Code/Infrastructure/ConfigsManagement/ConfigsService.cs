@@ -5,6 +5,7 @@ using Code.Gameplay.Abilities.Configs;
 using Code.Gameplay.Characters.Enemies;
 using Code.Gameplay.Characters.Enemies.Configs;
 using Code.Gameplay.Characters.Heroes.Configs;
+using Code.Gameplay.Difficulty;
 using Code.Gameplay.PickUps;
 using Code.Gameplay.PickUps.Configs;
 using Code.Infrastructure.AssetManagement;
@@ -20,6 +21,7 @@ namespace Code.Infrastructure.ConfigsManagement
 		private Dictionary<AbilityId, AbilityConfig> _abilitiesById = new();
 
 		public HeroConfig HeroConfig { get; private set; }
+		public DifficultyConfig DifficultyConfig { get; private set; }
 
 		public ConfigsService(IAssetsService assets)
 		{
@@ -29,6 +31,7 @@ namespace Code.Infrastructure.ConfigsManagement
 		public void Load()
 		{
 			LoadHeroConfig();
+			LoadDifficultyConfig();
 			LoadEnemyConfigs();
 			LoadPickUpConfigs();
 			LoadAbilityConfigs();
@@ -43,6 +46,11 @@ namespace Code.Infrastructure.ConfigsManagement
 		private void LoadHeroConfig()
 		{
 			HeroConfig = _assets.LoadAssetFromResources<HeroConfig>("Configs/HeroConfig");
+		}
+		
+		private void LoadDifficultyConfig()
+		{
+			DifficultyConfig = _assets.LoadAssetFromResources<DifficultyConfig>("Configs/DifficultyConfig");
 		}
 
 		private void LoadEnemyConfigs()

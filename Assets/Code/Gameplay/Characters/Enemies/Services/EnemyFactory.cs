@@ -16,6 +16,9 @@ namespace Code.Gameplay.Characters.Enemies.Services
 		private readonly IConfigsService _configsService;
 		private readonly IInstantiateService _instantiateService;
 		private readonly IIdentifierService _identifiers;
+		
+		private float enemyHealthDifficultyBonus = 0f;
+		private float enemyDamageDifficultyBonus = 0f;
 
 		public EnemyFactory(
 			IConfigsService configsService, 
@@ -36,14 +39,20 @@ namespace Code.Gameplay.Characters.Enemies.Services
 				.Setup(_identifiers.Next());
 			
 			enemy.GetComponent<Stats>()
-				.SetBaseStat(StatType.MaxHealth, enemyConfig.Health)
+				.SetBaseStat(StatType.MaxHealth, enemyConfig.Health + enemyHealthDifficultyBonus)
 				.SetBaseStat(StatType.MovementSpeed, enemyConfig.MovementSpeed)
-				.SetBaseStat(StatType.Damage, enemyConfig.Damage);
+				.SetBaseStat(StatType.Damage, enemyConfig.Damage + enemyDamageDifficultyBonus);
 
 			enemy.GetComponent<Health>()
 				.Setup(enemyConfig.Health, enemyConfig.Health);
 			
 			return enemy;
+		}
+
+		public void UpdateEnemyDifficultyModifiers(float healthModifier, float damageModifier)
+		{
+			enemyHealthDifficultyBonus += healthModifier;
+			enemyDamageDifficultyBonus += damageModifier;
 		}
 	}
 }
