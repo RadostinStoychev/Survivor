@@ -10,12 +10,15 @@ namespace Code.Gameplay.Characters.Heroes.Services
 		public Experience Experience { get; private set; }
 		public Stats Stats { get; private set; }
 		
+		public Abilities.Abilities Abilities { get; private set; }
+		
 		public void SetHero(Behaviours.Hero hero)
 		{
 			Hero = hero;
 			Health = hero.GetComponent<Health>();
 			Experience = hero.GetComponent<Experience>();
 			Stats = hero.GetComponent<Stats>();
+			Abilities = hero.GetComponent<Abilities.Abilities>();
 		}
 	}
 }

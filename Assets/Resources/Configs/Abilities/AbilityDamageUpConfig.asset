@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AbilityDamageUpConfig
   m_EditorClassIdentifier: 
   Id: 6
+  Prefab: {fileID: 8242245196074691102, guid: 8eaa59fdad974412186482402b98970d, type: 3}
   Name: Damage Up
   Description: "The player\u2019s Damage increases. Can be gained multiple times."
   IsObtainableMoreThanOnce: 1

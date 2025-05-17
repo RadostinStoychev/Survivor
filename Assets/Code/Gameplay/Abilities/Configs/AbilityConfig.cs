@@ -7,6 +7,8 @@ namespace Code.Gameplay.Abilities.Configs
     {
         public AbilityId Id;
 
+        public GameObject Prefab;
+        
         public string Name;
         public string Description;
         public bool IsObtainableMoreThanOnce;

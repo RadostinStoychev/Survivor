@@ -28,6 +28,14 @@ namespace Code.Infrastructure.Instantiation
             return _instantiator.Instantiate<T>(args);
         }
 
+        public GameObject InstantiatePrefabInParent(GameObject prefab, Transform parent)
+        {
+            GameObject instantiated = _instantiator.InstantiatePrefab(prefab, parent);
+            instantiated.name = instantiated.name.Replace("(Clone)", string.Empty);
+
+            return instantiated;
+        }
+        
         public T InstantiatePrefabForComponent<T>(T prefab, Vector3 at, Quaternion rotation, Transform parent = null) 
             where T : Component
         {

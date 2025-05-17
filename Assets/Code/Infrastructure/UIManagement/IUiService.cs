@@ -4,6 +4,7 @@ namespace Code.Infrastructure.UIManagement
 	{
 		T GetWindow<T>() where T : WindowBase;
 		T OpenWindow<T>() where T : WindowBase;
+		T OpenWindowOverlay<T>() where T : WindowBase;
 		void CloseWindow<T>() where T : WindowBase;
 		void CloseWindow(WindowBase windowBase);
 		void Back();

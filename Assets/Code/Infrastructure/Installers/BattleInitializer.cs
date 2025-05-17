@@ -14,7 +14,7 @@ namespace Code.Infrastructure.Installers
 	{
 		[SerializeField] private Camera _mainCamera;
 		[SerializeField] private Transform _uiRoot;
-		
+
 		private ICameraProvider _cameraProvider;
 		private IHeroFactory _heroFactory;
 		private IInstantiator _instantiator;
@@ -47,11 +47,10 @@ namespace Code.Infrastructure.Installers
 			_instantiateService.SetInstantiator(_instantiator);
 			_uiRootProvider.SetUiRoot(_uiRoot);
 			
-			//TODO: Extract UI reactionary code to a UI related manager.
 			_activeHero = _heroFactory.CreateHero(Vector3.zero, Quaternion.identity);
 			_activeHero.GetComponent<Experience>().OnLevelUp += () =>
 			{
-				_uiService.OpenWindow<LevelUpWindow>();
+				_uiService.OpenWindowOverlay<LevelUpWindow>();
 			};
 
 			_uiService.OpenWindow<HudWindow>();

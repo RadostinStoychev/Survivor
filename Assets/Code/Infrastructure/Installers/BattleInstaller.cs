@@ -1,3 +1,4 @@
+using Code.Gameplay.Abilities.Services;
 using Code.Gameplay.Cameras.Services;
 using Code.Gameplay.Characters.Enemies.Services;
 using Code.Gameplay.Characters.Heroes.Services;
@@ -16,6 +17,7 @@ namespace Code.Infrastructure.Installers
 			BindCameraServices();
 			BindCombatServices();
 			BindPickupServices();
+			BindAbilityServices();
 		}
 
 		private void BindPickupServices()
@@ -44,6 +46,11 @@ namespace Code.Infrastructure.Installers
 		{
 			Container.BindInterfacesTo<HeroFactory>().AsSingle();
 			Container.BindInterfacesTo<HeroProvider>().AsSingle();
+		}
+
+		private void BindAbilityServices()
+		{
+			Container.BindInterfacesTo<AbilityFactory>().AsSingle();
 		}
 	}
 }

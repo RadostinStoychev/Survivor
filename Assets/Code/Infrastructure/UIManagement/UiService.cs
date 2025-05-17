@@ -42,6 +42,19 @@ namespace Code.Infrastructure.UIManagement
       PutInHierarchy(window);
       return window;
     }
+    
+    public T OpenWindowOverlay<T>() where T : WindowBase
+    {
+      var openedWindow = GetWindow<T>();
+
+      if (openedWindow != null)
+        return openedWindow;
+      
+      var window = _uiFactory.CreateWindow<T>(_uiRootProvider.UiRoot);
+      window.Initialize();
+      PutInHierarchyLast(window);
+      return window;
+    }
 
     public void CloseWindow<T>() where T : WindowBase
     {
@@ -109,6 +122,12 @@ namespace Code.Infrastructure.UIManagement
     private void PutInHierarchy<T>(T window) where T : WindowBase
     {
       window.transform.SetSiblingIndex(_windowInfoService.GetWindowOrder<T>());
+      _hierarchy.Add(window);
+    }
+
+    private void PutInHierarchyLast<T>(T window) where T : WindowBase
+    {
+      window.transform.SetAsLastSibling();
       _hierarchy.Add(window);
     }
   }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AbilityOrbitingProjectilesConfig
   m_EditorClassIdentifier: 
   Id: 3
+  Prefab: {fileID: 8242245196074691102, guid: 8eaa59fdad974412186482402b98970d, type: 3}
   Name: Orbiting Projectiles
   Description: Creates three projectiles that orbit around the player. When a projectile
     hits an enemy it disappears and reappears after some delay. Can only be gained

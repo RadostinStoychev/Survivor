@@ -1,4 +1,6 @@
 using Code.Gameplay.Abilities;
+using Code.Gameplay.Abilities.Configs;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,8 +8,8 @@ namespace Code.UI
 {
     public class AbilityCardPanel : MonoBehaviour
     {
-        [SerializeField] private Text _abilityNameText;
-        [SerializeField] private Text _abilityDescriptionText;
+        [SerializeField] private TextMeshProUGUI _abilityNameText;
+        [SerializeField] private TextMeshProUGUI _abilityDescriptionText;
         [SerializeField] private Button _selectAbilityButton;
 
         private AbilityId cardAbility;
@@ -22,9 +24,11 @@ namespace Code.UI
             _selectAbilityButton?.onClick.RemoveListener(OnAbilityCardClicked);
         }
 
-        public void Setup()
+        public void Setup(AbilityConfig abilityConfig)
         {
-            
+            cardAbility = abilityConfig.Id;
+            _abilityNameText.text = abilityConfig.Name;
+            _abilityDescriptionText.text = abilityConfig.Description;
         }
 
         private void OnAbilityCardClicked()

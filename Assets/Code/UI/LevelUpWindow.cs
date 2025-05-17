@@ -1,17 +1,83 @@
+using System;
+using System.Collections.Generic;
+using Code.Gameplay.Abilities;
+using Code.Gameplay.Abilities.Services;
+using Code.Gameplay.Characters.Heroes.Behaviours;
+using Code.Gameplay.Characters.Heroes.Services;
 using Code.Infrastructure.UIManagement;
+using UnityEngine;
+using Zenject;
 
 namespace Code.UI
 {
     public class LevelUpWindow : WindowBase
     {
+        private const int DisplayedAbilityCardsCount = 3;
         public override bool IsUserCanClose => false;
 
-        private void OnPlayerLevelUp()
+        [SerializeField] private Transform _abilityPanelsParent;
+        
+        private List<AbilityCardPanel> _abilityCards = new List<AbilityCardPanel>();
+        
+        private IAbilityFactory _abilityFactory;
+        private IHeroProvider _heroProvider;
+        
+        [Inject]
+        private void Construct(IAbilityFactory abilityFactory, IHeroProvider heroProvider)
         {
-            OnOpen();
+            _abilityFactory = abilityFactory;
+            _heroProvider = heroProvider;
+        }
+
+        protected override void OnOpen()
+        {
+            base.OnOpen();
+            ToggleTimeFreeze();
+            PrepareAbilityCards();
+        }
+
+        protected override void OnClose()
+        {
+            base.OnClose();
+            ToggleTimeFreeze();
+        }
+
+        private void ToggleTimeFreeze()
+        {
+            Time.timeScale = Time.timeScale == 0 ? 1 : 0;
         }
         
-        //TODO: Upon opening, choose 3 abilities (from the ones that could be obtained) and instantiate them.
+        private void PrepareAbilityCards()
+        {
+            Hero hero = _heroProvider.Hero;
+				
+            if (hero == null)
+                return;
+            
+            _abilityCards.Clear();
+
+            int cardsCreated = 0;
+            AbilityId[] allAbilityIds = (AbilityId[])Enum.GetValues(typeof(AbilityId));
+
+            foreach (AbilityId abilityId in allAbilityIds)
+            {
+                bool isAbilityAlreadyObtainedByHero = IsAbilityAlreadyObtainedByHero(abilityId);
+                
+                if (_abilityFactory.CreateAbilityCard(abilityId, _abilityPanelsParent, isAbilityAlreadyObtainedByHero))
+                {
+                    cardsCreated++;
+                    
+                    if (cardsCreated >= DisplayedAbilityCardsCount)
+                        break;
+                }
+            }
+        }
+
+        private bool IsAbilityAlreadyObtainedByHero(AbilityId abilityId)
+        {
+            List<AbilityId> obtainedAbilityIds = _heroProvider.Abilities.GetHeroAbilities();
+            return obtainedAbilityIds.Contains(abilityId);
+        }
         
         //TODO: Close upon ability selection.
     }

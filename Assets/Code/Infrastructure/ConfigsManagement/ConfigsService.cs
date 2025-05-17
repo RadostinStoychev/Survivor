@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Code.Gameplay.Abilities;
+using Code.Gameplay.Abilities.Configs;
 using Code.Gameplay.Characters.Enemies;
 using Code.Gameplay.Characters.Enemies.Configs;
 using Code.Gameplay.Characters.Heroes.Configs;
@@ -15,6 +17,7 @@ namespace Code.Infrastructure.ConfigsManagement
 
 		private Dictionary<EnemyId, EnemyConfig> _enemiesById = new();
 		private Dictionary<PickUpId, PickUpConfig> _pickupsById = new();
+		private Dictionary<AbilityId, AbilityConfig> _abilitiesById = new();
 
 		public HeroConfig HeroConfig { get; private set; }
 
@@ -28,6 +31,7 @@ namespace Code.Infrastructure.ConfigsManagement
 			LoadHeroConfig();
 			LoadEnemyConfigs();
 			LoadPickUpConfigs();
+			LoadAbilityConfigs();
 		}
 
 		private void LoadPickUpConfigs()
@@ -47,6 +51,12 @@ namespace Code.Infrastructure.ConfigsManagement
 			_enemiesById = enemyConfigs.ToList().ToDictionary(x => x.Id, x => x);
 		}
 
+		private void LoadAbilityConfigs()
+		{
+			var abilityConfigs = _assets.LoadAssetsFromResources<AbilityConfig>("Configs/Abilities");
+			_abilitiesById = abilityConfigs.ToList().ToDictionary(x => x.Id, x => x);
+		}
+
 		public EnemyConfig GetEnemyConfig(EnemyId id)
 		{
 			if (_enemiesById.TryGetValue(id, out EnemyConfig enemyConfig))
@@ -61,6 +71,14 @@ namespace Code.Infrastructure.ConfigsManagement
 				return pickUpConfig;
 
 			throw new KeyNotFoundException($"PickUp config with id {id} not found");
+		}
+
+		public AbilityConfig GetAbilityConfig(AbilityId id)
+		{
+			if (_abilitiesById.TryGetValue(id, out AbilityConfig abilityConfig))
+				return abilityConfig;
+			
+			throw new KeyNotFoundException($"Ability config with id {id} not found");
 		}
 	}
 }
