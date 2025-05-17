@@ -1,6 +1,7 @@
 using System;
 using Code.Gameplay.Characters.Enemies.Services;
 using Code.Gameplay.Characters.Heroes.Services;
+using Code.Gameplay.UnitStats;
 using Code.Infrastructure.UIManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace Code.UI
 	public class HudWindow : WindowBase
 	{
 		private const string ExperienceTextTemplate = "Experience: {0}";
+		private const string LevelTextTemplate = "Lvl. {0}";
 		
 		[SerializeField] private Slider _healthBar;
 		[SerializeField] private Slider _experienceBar;
@@ -35,6 +37,7 @@ namespace Code.UI
 			UpdateHealthBar();
 			UpdateExperienceBar();
 			UpdateKilledEnemiesText();
+			UpdateLevelText();
 		}
 
 		private void UpdateKilledEnemiesText()
@@ -59,6 +62,11 @@ namespace Code.UI
 
 			var newExperienceValueString = _heroProvider.Experience.CurrentExperience + " / " + _heroProvider.Experience.ExperienceToNextLevel;
 			_currentExperienceText.text = String.Format(ExperienceTextTemplate, newExperienceValueString);
+		}
+
+		private void UpdateLevelText()
+		{
+			_currentLevelText.text = String.Format(LevelTextTemplate, _heroProvider.Stats.GetStat(StatType.Level));
 		}
 	}
 }
