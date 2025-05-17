@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Code.Gameplay.Abilities;
 using Code.Gameplay.Abilities.Services;
 using Code.Gameplay.Characters.Heroes.Behaviours;
@@ -58,8 +59,16 @@ namespace Code.UI
 
             int cardsCreated = 0;
             AbilityId[] allAbilityIds = (AbilityId[])Enum.GetValues(typeof(AbilityId));
+            
+            // Randomize the available abilities
+            System.Random rng = new System.Random();
+            AbilityId[] randomAbilityIds = Enum.GetValues(typeof(AbilityId))
+                .Cast<AbilityId>()
+                .OrderBy(_ => rng.Next())
+                .Take(DisplayedAbilityCardsCount)
+                .ToArray();
 
-            foreach (AbilityId abilityId in allAbilityIds)
+            foreach (AbilityId abilityId in randomAbilityIds)
             {
                 bool isAbilityAlreadyObtainedByHero = IsAbilityAlreadyObtainedByHero(abilityId);
 

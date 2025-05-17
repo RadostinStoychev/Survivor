@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Gameplay.UnitStats;
 using Code.Gameplay.UnitStats.Behaviours;
 using UnityEngine;
 
@@ -17,6 +18,25 @@ namespace Code.Gameplay.Abilities
         public void ObtainAbility(AbilityId abilityId)
         {
             _heroAbilities.Add(abilityId);
+            ApplyAbilityEffect(abilityId);
+        }
+
+        private void ApplyAbilityEffect(AbilityId abilityId)
+        {
+            Stats stats = GetComponent<Stats>();
+            
+            switch (abilityId)
+            {
+                case AbilityId.DamageUp:
+                    stats.SetBaseStat(StatType.Damage, stats.GetStat(StatType.Damage) + 1);
+                    break;
+                case AbilityId.HealthUp:
+                    stats.SetBaseStat(StatType.MaxHealth, stats.GetStat(StatType.MaxHealth) + 1);
+                    break;
+                case AbilityId.AgilityUp:
+                    stats.SetBaseStat(StatType.RotationSpeed, stats.GetStat(StatType.RotationSpeed) + 1);
+                    break;
+            }
         }
     }
 }
