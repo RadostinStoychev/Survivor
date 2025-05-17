@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Gameplay.Lifetime.Behaviours;
 using Code.Gameplay.UnitStats;
 using Code.Gameplay.UnitStats.Behaviours;
 using UnityEngine;
@@ -15,13 +16,18 @@ namespace Code.Gameplay.Abilities
             return _heroAbilities;
         }
 
+        public bool IsAbilityObtained(AbilityId abilityId)
+        {
+            return _heroAbilities.Contains(abilityId);
+        }
+        
         public void ObtainAbility(AbilityId abilityId)
         {
             _heroAbilities.Add(abilityId);
-            ApplyAbilityEffect(abilityId);
+            ApplyStatAbilityEffect(abilityId);
         }
 
-        private void ApplyAbilityEffect(AbilityId abilityId)
+        private void ApplyStatAbilityEffect(AbilityId abilityId)
         {
             Stats stats = GetComponent<Stats>();
             
