@@ -10,5 +10,9 @@ namespace Code.UI
         {
             OnOpen();
         }
+        
+        //TODO: Upon opening, choose 3 abilities (from the ones that could be obtained) and instantiate them.
+        
+        //TODO: Close upon ability selection.
     }
 }
