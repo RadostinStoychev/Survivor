@@ -17,20 +17,20 @@ namespace Code.Gameplay.Abilities.Services
             _instantiateService = instantiateService;
         }
 
-        public bool CreateAbilityCard(AbilityId id, Transform parent, bool isAlreadyObtainedByHero)
+        public  AbilityCardPanel CreateAbilityCard(AbilityId id, Transform parent, bool isAlreadyObtainedByHero)
         {
             AbilityConfig abilityConfig = _configsService.GetAbilityConfig(id);
             
             // Return early if hero already has a non-stackable ability.
             if (!abilityConfig.IsObtainableMoreThanOnce && isAlreadyObtainedByHero)
             {
-                return false;
+                return null;
             }
             
             GameObject abilityCardObject = _instantiateService.InstantiatePrefabInParent(abilityConfig.Prefab, parent);
             abilityCardObject.GetComponent<AbilityCardPanel>().Setup(abilityConfig);
 
-            return true;
+            return abilityCardObject.GetComponent<AbilityCardPanel>();
         }
     }
 }

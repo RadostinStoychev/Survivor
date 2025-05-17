@@ -62,9 +62,12 @@ namespace Code.UI
             foreach (AbilityId abilityId in allAbilityIds)
             {
                 bool isAbilityAlreadyObtainedByHero = IsAbilityAlreadyObtainedByHero(abilityId);
-                
-                if (_abilityFactory.CreateAbilityCard(abilityId, _abilityPanelsParent, isAbilityAlreadyObtainedByHero))
+
+                AbilityCardPanel abilityCardPanel = _abilityFactory.CreateAbilityCard(abilityId, _abilityPanelsParent, isAbilityAlreadyObtainedByHero);
+                if (abilityCardPanel != null)
                 {
+                    _abilityCards.Add(abilityCardPanel);
+                    abilityCardPanel.OnAbilityObtained += OnAbilityObtainedByHero;
                     cardsCreated++;
                     
                     if (cardsCreated >= DisplayedAbilityCardsCount)
@@ -78,7 +81,18 @@ namespace Code.UI
             List<AbilityId> obtainedAbilityIds = _heroProvider.Abilities.GetHeroAbilities();
             return obtainedAbilityIds.Contains(abilityId);
         }
-        
-        //TODO: Close upon ability selection.
+
+        private void OnAbilityObtainedByHero(AbilityId abilityId)
+        {
+            _heroProvider.Abilities.ObtainAbility(abilityId);
+            
+            foreach (AbilityCardPanel abilityCardPanel in _abilityCards)
+            {
+                abilityCardPanel.OnAbilityObtained -= OnAbilityObtainedByHero;
+                Destroy(abilityCardPanel.gameObject);
+            }
+            
+            CloseWindow();
+        }
     }
 }

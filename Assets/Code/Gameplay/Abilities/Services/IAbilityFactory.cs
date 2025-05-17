@@ -1,9 +1,10 @@
+using Code.UI;
 using UnityEngine;
 
 namespace Code.Gameplay.Abilities.Services
 {
     public interface IAbilityFactory
     {
-        bool CreateAbilityCard(AbilityId id, Transform parent, bool isAlreadyObtainedByHero);
+        AbilityCardPanel CreateAbilityCard(AbilityId id, Transform parent, bool isAlreadyObtainedByHero);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Code.Gameplay.Abilities;
 using Code.Gameplay.Abilities.Configs;
 using TMPro;
@@ -8,11 +9,13 @@ namespace Code.UI
 {
     public class AbilityCardPanel : MonoBehaviour
     {
+        public Action<AbilityId> OnAbilityObtained;
+        
         [SerializeField] private TextMeshProUGUI _abilityNameText;
         [SerializeField] private TextMeshProUGUI _abilityDescriptionText;
         [SerializeField] private Button _selectAbilityButton;
 
-        private AbilityId cardAbility;
+        private AbilityId _cardAbility;
 
         private void OnEnable()
         {
@@ -26,14 +29,14 @@ namespace Code.UI
 
         public void Setup(AbilityConfig abilityConfig)
         {
-            cardAbility = abilityConfig.Id;
+            _cardAbility = abilityConfig.Id;
             _abilityNameText.text = abilityConfig.Name;
             _abilityDescriptionText.text = abilityConfig.Description;
         }
 
         private void OnAbilityCardClicked()
         {
-            //TODO: Add the ability to the Hero Abilities class.
+            OnAbilityObtained?.Invoke(_cardAbility);
         }
     }
 }
