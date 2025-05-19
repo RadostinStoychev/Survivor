@@ -14,6 +14,7 @@ namespace Code.Gameplay.Combat.Behaviours
 		[SerializeField] private Stats _ownerStats;
 		[SerializeField] private Team _ownerTeam;
 		[SerializeField] private VisionSight _visionSight;
+		[SerializeField] private Abilities.Abilities _heroAbilities;
 		
 		private IProjectileFactory _projectileFactory;
 		private IAimDirectionProvider _aimDirectionProvider;
@@ -55,7 +56,8 @@ namespace Code.Gameplay.Combat.Behaviours
 				_aimDirectionProvider.GetAimDirection(), 
 				_ownerTeam.Type, 
 				_ownerStats.GetStat(StatType.Damage), 
-				_ownerStats.GetStat(StatType.ProjectileSpeed));
+				_ownerStats.GetStat(StatType.ProjectileSpeed),
+				_heroAbilities.GetHeroAbilities());
 		}
 	}
 }

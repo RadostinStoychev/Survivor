@@ -240,6 +240,7 @@ MonoBehaviour:
   _ownerStats: {fileID: 2138147819601370093}
   _ownerTeam: {fileID: 3349484104395423038}
   _visionSight: {fileID: 8916894696654245301}
+  _heroAbilities: {fileID: 8837966716997340657}
 --- !u!1 &7848395713633495220
 GameObject:
   m_ObjectHideFlags: 0

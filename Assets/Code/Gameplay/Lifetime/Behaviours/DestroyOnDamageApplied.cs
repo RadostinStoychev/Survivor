@@ -1,17 +1,22 @@
+using Code.Gameplay.Abilities;
+using Code.Gameplay.Projectiles;
 using UnityEngine;
 
 namespace Code.Gameplay.Lifetime.Behaviours
 {
 	[RequireComponent(typeof(IDamageApplier))]
+	[RequireComponent(typeof(ProjectileAbilityHandler))]
 	public class DestroyOnDamageApplied : MonoBehaviour
 	{
 		[SerializeField] private float _delay;
 		
 		private IDamageApplier _damageApplier;
+		private ProjectileAbilityHandler _projectileAbilityHandler;
 
 		private void Awake()
 		{
 			_damageApplier = GetComponent<IDamageApplier>();
+			_projectileAbilityHandler = GetComponent<ProjectileAbilityHandler>();
 		}
 
 		private void OnEnable()
@@ -26,6 +31,9 @@ namespace Code.Gameplay.Lifetime.Behaviours
 
 		private void HandleDamageApplied(Health _)
 		{
+			if (_projectileAbilityHandler.IsProjectileAbilityObtained(AbilityId.PiercingProjectiles))
+				return;
+
 			Destroy(gameObject, _delay);
 		}
 	}
