@@ -7,6 +7,7 @@ using Code.Gameplay.Teams;
 using Code.Gameplay.Teams.Behaviours;
 using Code.Gameplay.UnitStats;
 using Code.Gameplay.UnitStats.Behaviours;
+using Code.Gameplay.Vision.Behaviours;
 using Code.Infrastructure.AssetManagement;
 using Code.Infrastructure.Identification;
 using Code.Infrastructure.Instantiation;
@@ -31,7 +32,7 @@ namespace Code.Gameplay.Projectiles.Services
 		}
 		
 		public Projectile CreateProjectile(Vector3 at, Vector2 direction, TeamType teamType,
-			float damage, float movementSpeed, List<AbilityId> abilities)
+			float damage, float movementSpeed, List<AbilityId> abilities, VisionSight visionSight)
 		{
 			var prefab = _assetsService.LoadAssetFromResources<Projectile>("Projectiles/Projectile");
 			Projectile projectile = _instantiateService.InstantiatePrefabForComponent(prefab, at, Quaternion.FromToRotation(Vector3.up, direction));
@@ -50,7 +51,7 @@ namespace Code.Gameplay.Projectiles.Services
 				.SetDirection(direction);
 			
 			projectile.GetComponent<ProjectileAbilityHandler>()
-				.SetHeroAbilitiesCurrentState(abilities);
+				.SetAbilityHandler(abilities, visionSight);
 			
 			return projectile;
 		}

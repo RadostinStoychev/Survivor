@@ -1,4 +1,5 @@
 using Code.Gameplay.Abilities;
+using Code.Gameplay.Movement.Behaviours;
 using Code.Gameplay.Projectiles;
 using UnityEngine;
 
@@ -31,6 +32,16 @@ namespace Code.Gameplay.Lifetime.Behaviours
 
 		private void HandleDamageApplied(Health _)
 		{
+			if (_projectileAbilityHandler.IsProjectileAbilityObtained(AbilityId.BouncingProjectiles))
+			{
+				Vector3? newDirection = _projectileAbilityHandler.GetNextEnemyDirection();
+				if (newDirection != null)
+				{
+					GetComponent<SettableMovementDirection>().SetDirection((Vector3)newDirection);
+					return;
+				}
+			}
+			
 			if (_projectileAbilityHandler.IsProjectileAbilityObtained(AbilityId.PiercingProjectiles))
 				return;
 

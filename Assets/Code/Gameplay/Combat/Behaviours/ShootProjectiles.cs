@@ -57,7 +57,8 @@ namespace Code.Gameplay.Combat.Behaviours
 				_ownerTeam.Type, 
 				_ownerStats.GetStat(StatType.Damage), 
 				_ownerStats.GetStat(StatType.ProjectileSpeed),
-				_heroAbilities.GetHeroAbilities());
+				_heroAbilities.GetHeroAbilities(),
+				_visionSight);
 		}
 	}
 }
